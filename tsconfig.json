@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "ESNext",
+        "declaration": true,
+        "outDir": "dist",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "isolatedModules": true,
+        "strict": true,
+        "resolveJsonModule": true
+    },
+    "include": ["src"]
+}
