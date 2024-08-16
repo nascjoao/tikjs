@@ -1,5 +1,3 @@
-import { type TikJSInput } from "..";
-
 /**
  * The average year length in days.
  *
@@ -22,6 +20,7 @@ const SECONDS_IN_A_DAY = HOURS_IN_A_DAY * SECONDS_IN_AN_HOUR;
 const SECONDS_IN_A_MONTH = AVERAGE_MONTH * SECONDS_IN_A_DAY;
 const SECONDS_IN_A_YEAR = AVERAGE_YEAR * SECONDS_IN_A_DAY;
 
+type TikJSInput = string | number;
 class TikJSTime {
     public years = 0;
     public months = 0;
@@ -40,6 +39,46 @@ class TikJSTime {
         this.minutes = seconds / SECONDS_IN_A_MINUTE;
         this.seconds = seconds;
         this.milliseconds = seconds * MILLISECONDS_IN_A_SECOND;
+    }
+
+    format(format: string) {
+        const blocksPattern = /(yy?|MM?|dd?|hh?|mm?|ss?|SS?|\[[^\]]+\])/g;
+        const thereAreNoBlocks = format.match(blocksPattern) === null;
+
+        if (thereAreNoBlocks) {
+            throw new Error(
+                `The time pattern "${format}" must contain at least one of the following blocks: "h", "hh", "m", "mm", "s" or "ss".`,
+            );
+        }
+
+        const wholeYears = Math.floor(this.years);
+        const wholeMonths = Math.floor(this.months) % 12;
+        const wholeDays = Math.floor(this.days) % 365;
+        const wholeHours = Math.floor(this.seconds / SECONDS_IN_AN_HOUR) % 24;
+        const wholeMinutes =
+            Math.floor(this.seconds / SECONDS_IN_A_MINUTE) % 60;
+        const wholeSeconds = Math.floor(this.seconds % 60);
+        const wholeMilliseconds = Math.floor(this.milliseconds % 1000);
+
+        const time: Record<string, number> = {
+            y: wholeYears,
+            M: wholeMonths,
+            d: wholeDays,
+            h: wholeHours,
+            m: wholeMinutes,
+            s: wholeSeconds,
+            S: wholeMilliseconds,
+        };
+
+        return format.replace(blocksPattern, (block) => {
+            if (block[0] === "[" && block[block.length - 1] === "]") {
+                return block.slice(1, -1);
+            }
+            const blockKey = block[0].toLowerCase();
+            const blockValue = time[blockKey];
+            // @ts-expect-error -- padStart has a polyfill
+            return blockValue.toString().padStart(block.length, "0");
+        });
     }
 }
 
