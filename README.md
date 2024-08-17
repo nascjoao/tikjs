@@ -1,6 +1,6 @@
 # Tik.js
 
-Fast **229B** library for formatting time in JavaScript
+Fast **lightweight** library for formatting time in JavaScript
 
 <a href="https://bundlephobia.com/package/tikjs">
     <img
