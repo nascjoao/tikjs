@@ -1,4 +1,4 @@
-import TikJSTime from "../TikJSTime";
+import TikJSTime, { type TikJSInput } from "../TikJSTime";
 
 /**
  * @param time - The time to be converted. It must be a number or string representing seconds.
@@ -24,8 +24,6 @@ import TikJSTime from "../TikJSTime";
  * console.log(time.format("Ti[m]e: m:ss")); // Time: 1:00
  * ```
  */
-export default function tikjs(
-    time: ConstructorParameters<typeof TikJSTime>[0],
-) {
+export default function tikjs(time: TikJSInput) {
     return new TikJSTime(time);
 }

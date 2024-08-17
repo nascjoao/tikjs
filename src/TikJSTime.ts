@@ -20,7 +20,7 @@ const SECONDS_IN_A_DAY = HOURS_IN_A_DAY * SECONDS_IN_AN_HOUR;
 const SECONDS_IN_A_MONTH = AVERAGE_MONTH * SECONDS_IN_A_DAY;
 const SECONDS_IN_A_YEAR = AVERAGE_YEAR * SECONDS_IN_A_DAY;
 
-type TikJSInput = string | number;
+export type TikJSInput = string | number;
 
 export default class TikJSTime {
     public years = 0;
