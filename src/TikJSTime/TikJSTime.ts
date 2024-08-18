@@ -22,7 +22,7 @@ const SECONDS_IN_A_YEAR = AVERAGE_YEAR * SECONDS_IN_A_DAY;
 
 export type TikJSInput = string | number;
 
-export default class TikJSTime {
+export class TikJSTime {
     public years = 0;
     public months = 0;
     public days = 0;
@@ -30,9 +30,47 @@ export default class TikJSTime {
     public minutes = 0;
     public seconds = 0;
     public milliseconds = 0;
+    public static dates = {
+        /**
+         * Get the duration between two or more dates. The order
+         * of the dates can be ascending or descending.
+         * @param dates - The dates to compare.
+         * @returns The duration between the dates.
+         * @example
+         * ```javascript
+         * const date1 = new Date("2021-01-01");
+         * const date2 = new Date("2021-01-02");
+         * const date3 = new Date("2021-01-03");
+         *
+         * const durationAsc = tikjs().dates.getDurationBetween(date1, date2, date3);
+         * console.log(durationAsc.days); // 2
+         *
+         * const durationDesc = tikjs().dates.getDurationBetween(date3, date2, date1);
+         * console.log(durationDesc.days); // 2
+         * ```
+         */
+        getDurationBetween(...dates: Date[]) {
+            let duration = 0;
+
+            for (let index = 1; index < dates.length; index += 1) {
+                const difference = Math.abs(
+                    dates[index].getTime() - dates[index - 1].getTime(),
+                );
+                duration = duration + difference;
+            }
+
+            return new TikJSTime(duration / MILLISECONDS_IN_A_SECOND);
+        },
+    };
 
     constructor(time: TikJSInput) {
         const seconds = Number(time);
+        if (seconds === 0) return;
+        if (isNaN(seconds)) {
+            throw new Error(
+                `The time "${time}" is not a valid number or string that can be converted to a number.`,
+            );
+        }
         this.years = seconds / SECONDS_IN_A_YEAR;
         this.months = seconds / SECONDS_IN_A_MONTH;
         this.days = seconds / SECONDS_IN_A_DAY;
@@ -54,7 +92,7 @@ export default class TikJSTime {
 
         const wholeYears = Math.floor(this.years);
         const wholeMonths = Math.floor(this.months) % 12;
-        const wholeDays = Math.floor(this.days) % 365;
+        const wholeDays = (Math.floor(this.days) % 365) % 31;
         const wholeHours = Math.floor(this.seconds / SECONDS_IN_AN_HOUR) % 24;
         const wholeMinutes =
             Math.floor(this.seconds / SECONDS_IN_A_MINUTE) % 60;
@@ -75,7 +113,7 @@ export default class TikJSTime {
             if (block[0] === "[" && block[block.length - 1] === "]") {
                 return block.slice(1, -1);
             }
-            const blockKey = block[0].toLowerCase();
+            const blockKey = block[0];
             const blockValue = time[blockKey];
             // @ts-expect-error -- padStart has a polyfill
             return blockValue.toString().padStart(block.length, "0");
