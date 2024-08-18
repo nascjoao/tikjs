@@ -7,6 +7,10 @@
         <link rel="stylesheet" href="./output.css" />
         <link rel="shortcut icon" href="favicon.png" type="image/png" />
         <script async defer src="https://buttons.github.io/buttons.js"></script>
+        <script type="module">
+            import tikjs from "https://unpkg.com/tikjs/dist/index.es.js";
+            window.tikjs = tikjs;
+        </script>
     </head>
 
     <body
@@ -164,9 +168,7 @@
             </div>
             <p class="opacity-60 text-sm">Copyright © 2024 Tik.js</p>
         </footer>
-        <script type="module">
-            import tikjs from "../dist/index.es.js";
-            window.tikjs = tikjs;
+        <script>
             console.log(
                 "%c Tik.js is ready to use. Type in the console to see the magic happen.",
                 "background: linear-gradient(#ffedd599, #ea580c99, #78350f99); color: white; font-weight: bold; font-size: 1rem; font-family: sans-serif; padding: 2rem; border-radius: 7px",
