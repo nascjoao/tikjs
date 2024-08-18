@@ -24,6 +24,13 @@ import { type TikJSInput, TikJSTime } from "../TikJSTime";
  * console.log(time.format("Ti[m]e: m:ss")); // Time: 1:00
  * ```
  */
-export default function tikjs(time: TikJSInput) {
+function tikjs(): typeof TikJSTime;
+function tikjs(time: TikJSInput): TikJSTime;
+function tikjs(time?: TikJSInput): TikJSTime | typeof TikJSTime {
+    if (time === undefined) {
+        return TikJSTime;
+    }
     return new TikJSTime(time);
 }
+
+export default tikjs;
