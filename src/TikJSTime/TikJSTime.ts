@@ -92,7 +92,7 @@ export class TikJSTime {
 
         const wholeYears = Math.floor(this.years);
         const wholeMonths = Math.floor(this.months) % 12;
-        const wholeDays = Math.floor(this.days) % 365;
+        const wholeDays = (Math.floor(this.days) % 365) % 31;
         const wholeHours = Math.floor(this.seconds / SECONDS_IN_AN_HOUR) % 24;
         const wholeMinutes =
             Math.floor(this.seconds / SECONDS_IN_A_MINUTE) % 60;
@@ -113,7 +113,7 @@ export class TikJSTime {
             if (block[0] === "[" && block[block.length - 1] === "]") {
                 return block.slice(1, -1);
             }
-            const blockKey = block[0].toLowerCase();
+            const blockKey = block[0];
             const blockValue = time[blockKey];
             // @ts-expect-error -- padStart has a polyfill
             return blockValue.toString().padStart(block.length, "0");
