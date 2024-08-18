@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tik.js</title>
+    <link rel="stylesheet" href="./output.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</head>
+
+<body class="dark:bg-neutral-900 dark:text-neutral-300 bg-neutral-100 text-neutral-900 dark:[&_*]:border-neutral-700">
+    <header class="py-8 px-4 h-[50svh] gap-4 flex flex-col items-center justify-center">
+        <a class="github-button" href="https://github.com/nascjoao/tikjs"
+            data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large" data-show-count="true"
+            aria-label="Star nascjoao/tikjs on GitHub">Star</a>
+        <h1
+            class="font-bold leading-tight text-6xl bg-gradient-to-br dark:from-orange-300 dark:via-orange-600 from-orange-100 via-orange-600 to-amber-900 bg-clip-text text-transparent">
+            Tik.js
+        </h1>
+        <p class="text-xl opacity-60 text-center">
+            Fast lightweight library for formatting time in JavaScript
+        </p>
+        <a href="#get-started"
+            class="mt-4 px-4 py-2 text-lg font-bold text-white bg-gradient-to-br from-orange-300 via-orange-600 to-amber-900 rounded-md dark:from-orange-600 dark:via-orange-800 dark:to-amber-900 dark:text-neutral-200 hover:from-orange-400 hover:via-orange-700 hover:to-amber-900">
+            Get Started
+        </a>
+    </header>
+    <div class="bg-amber-300 bg-opacity-15 border-y border-y-amber-300 dark:!border-y-amber-300">
+        <div class="max-w-screen-sm px-4 py-8 mx-auto">
+            <h2 class="mb-4 opacity-70 text-amber-900 dark:text-amber-300 text-sm tracking-widest uppercase font-bold">
+                Pro Tip!
+            </h2>
+            <p>
+                You can try Tik.js right in your browser console.
+                Just open it, type <code
+                    class="bg-amber-400 bg-opacity-50 py-1 px-1 rounded-md text-amber-900 dark:text-amber-100">tikjs(60)</code>,
+                for
+                example, and
+                see the magic
+                happen.
+                <br>
+                <br>
+                <a href="#examples" class="text-amber-900 dark:text-amber-100 hover:underline">
+                    Check out the examples to see more you can do with Tik.js.
+                </a>
+            </p>
+        </div>
+    </div>
+    <main>
+        <section class="mx-auto h-[50svh] px-4 py-8 max-w-screen-sm leading-loose">
+            <h2 class="my-4 opacity-70 text-sm tracking-widest uppercase font-bold">Handy
+                Advice</h2>
+            If you want to handle dates like parsing, validating, manipulating, and formatting, you should use
+            <a href="https://day.js.org/" target="_blank" rel="noopener noreferrer"
+                class="underline font-bold">day.js</a>. It is a fast 2kB alternative to
+            Moment.js with the same modern
+            API.
+            <br><br>
+            <strong>Tik.js</strong> is a lightweight library for formatting time only. It is choice for those who do not
+            want to add an
+            extra size to their project.
+        </section>
+        <section id="get-started" class="mx-auto px-4 py-8 max-w-screen-sm leading-loose">
+            <h2 class="my-4 opacity-70 text-sm tracking-widest uppercase font-bold">
+                Get Started
+            </h2>
+            Install Tik.js:
+            <code
+                class="block whitespace-pre-wrap bg-neutral-200 dark:bg-neutral-800 py-2 px-4 rounded-md">npm install tikjs</code>
+            <br>
+            Import Tik.js:
+            <code
+                class="block whitespace-pre-wrap bg-neutral-200 dark:bg-neutral-800 py-2 px-4 rounded-md">import tikjs from 'tikjs';</code>
+            <br>
+            Use Tik.js:
+            <code
+                class="block whitespace-pre-wrap bg-neutral-200 dark:bg-neutral-800 py-2 px-4 rounded-md">tikjs(60).minutes; // 1</code>
+            <br>
+        </section>
+        <section id="examples" class="mx-auto px-4 py-8 max-w-screen-sm leading-loose">
+            <h2 class="my-4 opacity-70 text-sm tracking-widest uppercase font-bold">
+                Examples
+            </h2>
+            <code
+                class="block whitespace-pre-wrap bg-neutral-200 dark:bg-neutral-800 py-2 px-4 rounded-md">tikjs(60).format('Ti[m]e mm:ss'); // Time 01:00</code>
+            <br>
+            <code class="block whitespace-pre-wrap bg-neutral-200 dark:bg-neutral-800 py-2 px-4 rounded-md">tikjs().dates.getDurationBetween(
+    new Date("2024-01-01T05:13:05Z"),
+    new Date("2024-01-01T02:30:20Z"),
+    new Date("2024-01-01T01:00:00Z"),
+).format("h [hours], m [minutes] [and] s [seconds]")
+// 4 hours, 13 minutes and 5 seconds</code>
+        </section>
+    </main>
+    <footer class="py-8 grid gap-4 px-4 mt-20 text-center border-t bg-neutral-900 text-neutral-200">
+        <div class="grid gap-2">
+            <h1
+                class="font-bold leading-tight text-xl bg-gradient-to-br dark:from-orange-300 dark:via-orange-600 from-orange-100 via-orange-600 to-amber-900 bg-clip-text text-transparent">
+                Tik.js
+            </h1>
+            <a class="github-button" href="https://github.com/nascjoao/tikjs"
+                data-color-scheme="no-preference: light; light: light; dark: dark;" data-size="large"
+                data-show-count="true" aria-label="Star nascjoao/tikjs on GitHub">Star</a>
+        </div>
+        <p class="opacity-60 text-sm">
+            Copyright © 2024 Tik.js
+        </p>
+    </footer>
+    <script type="module">
+        import tikjs from '../dist/index.es.js';
+        window.tikjs = tikjs;
+        console.log('%c Tik.js is ready to use. Type in the console to see the magic happen.', 'background: linear-gradient(#ffedd599, #ea580c99, #78350f99); color: white; font-weight: bold; font-size: 1rem; font-family: sans-serif; padding: 2rem; border-radius: 7px');
+        console.log('%c🙂💬 Hi, there!\n\
+I am here to help you get started with Tik.js.\n\
+Type tikjs(60) and you will have a duration object representing 1 minute.\n\
+You will notice that this 1 minute will be parsed to milliseconds, seconds, minutes, hours, days, months, and years. With this object, you can format the time in any way you want.\n\
+e.g. tikjs(60).format(\'Ti[m]e mm:ss\') will return \'Time 01:00\'\n\
+Have you noticed the square brackets? They are used to escape the characters that you want to be displayed as they are.\n\
+Also, you can get the duration between two dates with tikjs().dates.getDurationBetween.\n\
+Have fun!', 'font-size: 0.75rem; font-weight: 400; padding: 0.5rem; border-left: 5px solid #ffedd5;');
+    </script>
+</body>
+
+</html>

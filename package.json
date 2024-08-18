@@ -19,7 +19,8 @@
         "lint": "eslint",
         "test": "jest",
         "test:watch": "jest --watchAll",
-        "size": "size-limit && gzip-size dist/*"
+        "size": "size-limit && gzip-size dist/*",
+        "docs:dev": "tailwindcss -i ./docs/index.css -o ./docs/output.css --watch"
     },
     "size-limit": [
         {
@@ -54,6 +55,7 @@
         "rollup-plugin-delete": "^2.0.0",
         "rollup-plugin-dts": "^6.1.1",
         "size-limit": "^11.1.4",
+        "tailwindcss": "^3.4.10",
         "ts-jest": "^29.2.4",
         "typescript": "^5.5.4",
         "typescript-eslint": "^8.1.0"
