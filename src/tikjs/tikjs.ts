@@ -1,4 +1,4 @@
-import TikJSTime, { type TikJSInput } from "../TikJSTime";
+import { type TikJSInput, TikJSTime } from "../TikJSTime";
 
 /**
  * @param time - The time to be converted. It must be a number or string representing seconds.

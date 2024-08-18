@@ -22,7 +22,7 @@ const SECONDS_IN_A_YEAR = AVERAGE_YEAR * SECONDS_IN_A_DAY;
 
 export type TikJSInput = string | number;
 
-export default class TikJSTime {
+export class TikJSTime {
     public years = 0;
     public months = 0;
     public days = 0;
@@ -30,9 +30,29 @@ export default class TikJSTime {
     public minutes = 0;
     public seconds = 0;
     public milliseconds = 0;
+    public static dates = {
+        getDurationBetween(...dates: Date[]) {
+            let duration = 0;
+
+            for (let index = 1; index < dates.length; index += 1) {
+                const difference = Math.abs(
+                    dates[index].getTime() - dates[index - 1].getTime(),
+                );
+                duration = duration + difference;
+            }
+
+            return new TikJSTime(duration / MILLISECONDS_IN_A_SECOND);
+        },
+    };
 
     constructor(time: TikJSInput) {
         const seconds = Number(time);
+        if (seconds === 0) return;
+        if (isNaN(seconds)) {
+            throw new Error(
+                `The time "${time}" is not a valid number or string that can be converted to a number.`,
+            );
+        }
         this.years = seconds / SECONDS_IN_A_YEAR;
         this.months = seconds / SECONDS_IN_A_MONTH;
         this.days = seconds / SECONDS_IN_A_DAY;
