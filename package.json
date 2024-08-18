@@ -18,8 +18,15 @@
         "format": "prettier --write",
         "lint": "eslint",
         "test": "jest",
-        "test:watch": "jest --watchAll"
+        "test:watch": "jest --watchAll",
+        "size": "size-limit && gzip-size dist/*"
     },
+    "size-limit": [
+        {
+            "path": "dist",
+            "limit": "1.5 kB"
+        }
+    ],
     "keywords": [
         "dayjs",
         "time",
@@ -35,6 +42,7 @@
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^11.1.6",
+        "@size-limit/preset-small-lib": "^11.1.4",
         "@types/jest": "^29.5.12",
         "eslint": "^9.9.0",
         "eslint-config-prettier": "^9.1.0",
@@ -45,8 +53,12 @@
         "rollup": "^4.20.0",
         "rollup-plugin-delete": "^2.0.0",
         "rollup-plugin-dts": "^6.1.1",
+        "size-limit": "^11.1.4",
         "ts-jest": "^29.2.4",
         "typescript": "^5.5.4",
         "typescript-eslint": "^8.1.0"
+    },
+    "dependencies": {
+        "gzip-size-cli": "^5.1.0"
     }
 }
