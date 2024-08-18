@@ -31,6 +31,24 @@ export class TikJSTime {
     public seconds = 0;
     public milliseconds = 0;
     public static dates = {
+        /**
+         * Get the duration between two or more dates. The order
+         * of the dates can be ascending or descending.
+         * @param dates - The dates to compare.
+         * @returns The duration between the dates.
+         * @example
+         * ```javascript
+         * const date1 = new Date("2021-01-01");
+         * const date2 = new Date("2021-01-02");
+         * const date3 = new Date("2021-01-03");
+         *
+         * const durationAsc = tikjs().dates.getDurationBetween(date1, date2, date3);
+         * console.log(durationAsc.days); // 2
+         *
+         * const durationDesc = tikjs().dates.getDurationBetween(date3, date2, date1);
+         * console.log(durationDesc.days); // 2
+         * ```
+         */
         getDurationBetween(...dates: Date[]) {
             let duration = 0;
 
