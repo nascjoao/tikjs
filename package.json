@@ -13,7 +13,7 @@
         "type": "git",
         "url": "https://github.com/nascjoao/tikjs"
     },
-    "homepage": "https://nascjoao.github.io/tikjs",
+    "homepage": "https://tik.js.org",
     "scripts": {
         "build": "rollup -c",
         "format": "prettier --write",
