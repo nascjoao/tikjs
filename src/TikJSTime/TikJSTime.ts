@@ -64,11 +64,50 @@ export class TikJSTime {
     };
 
     constructor(time: TikJSInput) {
-        const seconds = Number(time);
+        if (time === Number(0)) return;
+        let unit = "s";
+        let _time = time;
+        if (typeof time === "string") {
+            const match = time.match(/(\d+)\s*([yMdHmsS])/);
+            if (match !== null) {
+                _time = match[1];
+                unit = match[2];
+            }
+        }
+
+        switch (unit) {
+            case "y":
+                _time = Number(_time) * SECONDS_IN_A_YEAR;
+                break;
+            case "M":
+                _time = Number(_time) * SECONDS_IN_A_MONTH;
+                break;
+            case "d":
+                _time = Number(_time) * SECONDS_IN_A_DAY;
+                break;
+            case "H":
+                _time = Number(_time) * SECONDS_IN_AN_HOUR;
+                break;
+            case "m":
+                _time = Number(_time) * SECONDS_IN_A_MINUTE;
+                break;
+            case "s":
+                _time = Number(_time);
+                break;
+            case "S":
+                _time = Number(_time) / MILLISECONDS_IN_A_SECOND;
+                break;
+            default:
+                throw new Error(
+                    `Valid units: "y", "M", "d", "H", "m", "s" or "S".`,
+                );
+        }
+
+        const seconds = Number(_time);
         if (seconds === 0) return;
         if (isNaN(seconds)) {
             throw new Error(
-                `The time "${time}" is not a valid number or string that can be converted to a number.`,
+                `Not a valid number or string that can be converted to a number.`,
             );
         }
         this.years = seconds / SECONDS_IN_A_YEAR;
@@ -84,11 +123,7 @@ export class TikJSTime {
         const blocksPattern = /(yy?|MM?|dd?|hh?|mm?|ss?|SS?|\[[^\]]+\])/g;
         const thereAreNoBlocks = format.match(blocksPattern) === null;
 
-        if (thereAreNoBlocks) {
-            throw new Error(
-                `The time pattern "${format}" must contain at least one of the following blocks: "h", "hh", "m", "mm", "s" or "ss".`,
-            );
-        }
+        if (thereAreNoBlocks) return format;
 
         const wholeYears = Math.floor(this.years);
         const wholeMonths = Math.floor(this.months) % 12;
