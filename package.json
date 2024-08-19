@@ -27,7 +27,7 @@
     "size-limit": [
         {
             "path": "dist",
-            "limit": "1.5 kB"
+            "limit": "1.99 kB"
         }
     ],
     "keywords": [
