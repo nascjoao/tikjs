@@ -64,46 +64,59 @@ export class TikJSTime {
     };
 
     constructor(time: TikJSInput) {
-        if (time === Number(0)) return;
-        let unit = "s";
-        let _time = time;
+        if (time === 0) return;
+
+        const timeCollection = [];
+        let seconds = 0;
+
         if (typeof time === "string") {
-            const match = time.match(/(\d+)\s*([yMdHmsS])/);
-            if (match !== null) {
-                _time = match[1];
-                unit = match[2];
+            const regex = /(\d+)\s*([yMdHmsS])?/g;
+            let match;
+            const matches = [];
+
+            while ((match = regex.exec(time)) !== null) {
+                matches.push(match);
+            }
+
+            for (const match of matches) {
+                timeCollection.push([match[1], match[2] || "s"]);
             }
         }
 
-        switch (unit) {
-            case "y":
-                _time = Number(_time) * SECONDS_IN_A_YEAR;
-                break;
-            case "M":
-                _time = Number(_time) * SECONDS_IN_A_MONTH;
-                break;
-            case "d":
-                _time = Number(_time) * SECONDS_IN_A_DAY;
-                break;
-            case "H":
-                _time = Number(_time) * SECONDS_IN_AN_HOUR;
-                break;
-            case "m":
-                _time = Number(_time) * SECONDS_IN_A_MINUTE;
-                break;
-            case "s":
-                _time = Number(_time);
-                break;
-            case "S":
-                _time = Number(_time) / MILLISECONDS_IN_A_SECOND;
-                break;
-            default:
-                throw new Error(
-                    `Valid units: "y", "M", "d", "H", "m", "s" or "S".`,
-                );
+        if (timeCollection.length === 0) {
+            timeCollection.push([time, "s"]);
         }
 
-        const seconds = Number(_time);
+        for (const [_time, unit] of timeCollection) {
+            switch (unit) {
+                case "y":
+                    seconds += Number(_time) * SECONDS_IN_A_YEAR;
+                    break;
+                case "M":
+                    seconds += Number(_time) * SECONDS_IN_A_MONTH;
+                    break;
+                case "d":
+                    seconds += Number(_time) * SECONDS_IN_A_DAY;
+                    break;
+                case "H":
+                    seconds += Number(_time) * SECONDS_IN_AN_HOUR;
+                    break;
+                case "m":
+                    seconds += Number(_time) * SECONDS_IN_A_MINUTE;
+                    break;
+                case "s":
+                    seconds += Number(_time);
+                    break;
+                case "S":
+                    seconds += Number(_time) / MILLISECONDS_IN_A_SECOND;
+                    break;
+                default:
+                    throw new Error(
+                        `Valid units: "y", "M", "d", "H", "m", "s" or "S".`,
+                    );
+            }
+        }
+
         if (seconds === 0) return;
         if (isNaN(seconds)) {
             throw new Error(
