@@ -1,26 +1,14 @@
-/**
- * The average year length in days.
- *
- * This is the average length of a year in days, taking into account leap years.
- *
- * A common year has 365 days, but a leap year has 366 days. We add an extra day every 4 years
- * to account for the extra 0.25 days per year. However, century years are not leap years unless
- * they are divisible by 400. For example, 2000 is a leap year, but 2100 is not.
- *
- * To do this calculation, we add 1/4 of a day every year, but subtract 1/100 of a day every year.
- * Also add 1/400 of a day every year.
- */
-const AVERAGE_YEAR = 365 + 1 / 4 - 1 / 100 + 1 / 400;
-const AVERAGE_MONTH = AVERAGE_YEAR / 12;
-const HOURS_IN_A_DAY = 24;
-const MILLISECONDS_IN_A_SECOND = 1000;
-const SECONDS_IN_A_MINUTE = 60;
-const SECONDS_IN_AN_HOUR = 60 * 60;
-const SECONDS_IN_A_DAY = HOURS_IN_A_DAY * SECONDS_IN_AN_HOUR;
-const SECONDS_IN_A_MONTH = AVERAGE_MONTH * SECONDS_IN_A_DAY;
-const SECONDS_IN_A_YEAR = AVERAGE_YEAR * SECONDS_IN_A_DAY;
+import {
+    MILLISECONDS_IN_A_SECOND,
+    SECONDS_IN_A_DAY,
+    SECONDS_IN_A_MINUTE,
+    SECONDS_IN_A_MONTH,
+    SECONDS_IN_A_YEAR,
+    SECONDS_IN_AN_HOUR,
+} from "../utils/timeEquivalences";
+import parseTimeToSeconds from "../utils/parseTimeToSeconds";
 
-export type TikJSInput = string | number;
+export type TikJSInput = string | number | Date;
 
 export class TikJSTime {
     public years = 0;
@@ -32,6 +20,8 @@ export class TikJSTime {
     public milliseconds = 0;
     public static dates = {
         /**
+         * @deprecated Pass the dates as arguments to `tikjs()` instead.
+         * ---
          * Get the duration between two or more dates. The order
          * of the dates can be ascending or descending.
          * @param dates - The dates to compare.
@@ -63,14 +53,22 @@ export class TikJSTime {
         },
     };
 
-    constructor(time: TikJSInput) {
-        const seconds = Number(time);
-        if (seconds === 0) return;
-        if (isNaN(seconds)) {
-            throw new Error(
-                `The time "${time}" is not a valid number or string that can be converted to a number.`,
+    constructor(time: TikJSInput);
+    constructor(date1: Date, date2: Date);
+    constructor(timeOrDate: TikJSInput, date2?: Date) {
+        if (timeOrDate == 0) return;
+
+        let seconds = 0;
+
+        if (timeOrDate instanceof Date && date2 instanceof Date) {
+            const millisecondsBetweenDates = Math.abs(
+                timeOrDate.getTime() - date2.getTime(),
             );
+            seconds = millisecondsBetweenDates / MILLISECONDS_IN_A_SECOND;
+        } else if (!(timeOrDate instanceof Date)) {
+            seconds = parseTimeToSeconds(timeOrDate);
         }
+
         this.years = seconds / SECONDS_IN_A_YEAR;
         this.months = seconds / SECONDS_IN_A_MONTH;
         this.days = seconds / SECONDS_IN_A_DAY;
@@ -80,15 +78,30 @@ export class TikJSTime {
         this.milliseconds = seconds * MILLISECONDS_IN_A_SECOND;
     }
 
+    /**
+     * Format the time in a human-readable way.
+     * You can use the following blocks:
+     * - `y` or `yy`: years
+     * - `M` or `MM`: months
+     * - `d` or `dd`: days
+     * - `h` or `hh`: hours
+     * - `m` or `mm`: minutes
+     * - `s` or `ss`: seconds
+     * - `S` or `SS`: milliseconds
+     * - `[...]`: any text inside the brackets will be displayed as is
+     * @param format - The format to display the time.
+     * @returns The formatted time.
+     * @example
+     * ```javascript
+     * const time = tikjs(60);
+     * console.log(time.format("Ti[m]e: m:ss")); // Time: 1:00
+     * ```
+     */
     format(format: string) {
         const blocksPattern = /(yy?|MM?|dd?|hh?|mm?|ss?|SS?|\[[^\]]+\])/g;
         const thereAreNoBlocks = format.match(blocksPattern) === null;
 
-        if (thereAreNoBlocks) {
-            throw new Error(
-                `The time pattern "${format}" must contain at least one of the following blocks: "h", "hh", "m", "mm", "s" or "ss".`,
-            );
-        }
+        if (thereAreNoBlocks) return format;
 
         const wholeYears = Math.floor(this.years);
         const wholeMonths = Math.floor(this.months) % 12;

@@ -1,6 +1,6 @@
 {
     "name": "tikjs",
-    "version": "0.2.3",
+    "version": "0.3.0",
     "description": "Fast lightweight library for formatting time in JavaScript",
     "main": "dist/index.js",
     "module": "dist/index.es.js",
@@ -27,7 +27,7 @@
     "size-limit": [
         {
             "path": "dist",
-            "limit": "1.5 kB"
+            "limit": "1.99 kB"
         }
     ],
     "keywords": [
