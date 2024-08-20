@@ -89,11 +89,14 @@
             <code
                 class="block whitespace-pre-wrap bg-neutral-200 dark:bg-neutral-800 py-2 px-4 rounded-md">tikjs(60).format('Ti[m]e mm:ss'); // Time 01:00</code>
             <br />
-            <code class="block whitespace-pre-wrap bg-neutral-200 dark:bg-neutral-800 py-2 px-4 rounded-md">tikjs().dates.getDurationBetween(
+            <code
+                class="block whitespace-pre-wrap bg-neutral-200 dark:bg-neutral-800 py-2 px-4 rounded-md">tikjs('10y').format('y [years]'); // 10 years</code>
+            <br />
+            <code class="block whitespace-pre-wrap bg-neutral-200 dark:bg-neutral-800 py-2 px-4 rounded-md">tikjs(
     new Date("2024-01-01T05:13:05Z"),
-    new Date("2024-01-01T02:30:20Z"),
     new Date("2024-01-01T01:00:00Z"),
 ).format("h [hours], m [minutes] [and] s [seconds]")
+
 // 4 hours, 13 minutes and 5 seconds
 </code>
         </section>
