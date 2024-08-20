@@ -21,6 +21,7 @@ export class TikJSTime {
     public static dates = {
         /**
          * @deprecated Pass the dates as arguments to `tikjs()` instead.
+         * ---
          * Get the duration between two or more dates. The order
          * of the dates can be ascending or descending.
          * @param dates - The dates to compare.
