@@ -70,7 +70,7 @@ export class TikJSTime {
         let seconds = 0;
 
         if (typeof time === "string") {
-            const regex = /(\d+)\s*([yMdHmsS])?/g;
+            const regex = /(\d+.?\d+?)\s*([yMdHmsS])?/g;
             let match;
             const matches = [];
 
